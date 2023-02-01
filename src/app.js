@@ -6,8 +6,11 @@ import createError from 'http-errors'
 import indexRouter from './routes/index'  
 import usersRouter from './routes/users'
 import cors from 'cors'
-
-
+import morgan from 'morgan'
+import fs from 'fs'
+import FileStreamRotator from 'file-stream-rotator/lib/FileStreamRotator'
+import bodyParser from 'body-parser'
+// const path = require('path')
 var app = express();
 
 // view engine setup
@@ -19,6 +22,27 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../public')));
+
+const logDirectory = path.join(__dirname, 'logs')
+const rotateLogStream = FileStreamRotator.getStream({
+  date_format: 'YYYYMMDD',
+  filename: path.join(logDirectory,'access-%DATE%.log'),
+  frequency: 'daily',
+  verbose: false,
+  max_logs: 10
+})
+fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory)
+morgan.token('body',function(req,res){
+  return req.body ? JSON.stringify(req.body) : '-'
+})
+morgan.format('short', ':remote-addr :remote-user [:date[clf]] :method :body :url HTTP/:http-version :status :res[content-length] - :response-time ms');
+app.use(morgan('short',{
+  stream: rotateLogStream,
+  // skip: function(req,res) { return res.statusCode < 400 }
+}))
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
