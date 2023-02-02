@@ -3,13 +3,15 @@ import path from 'path'
 import cookieParser from 'cookie-parser'
 import logger from 'morgan'
 import createError from 'http-errors'
-import indexRouter from './routes/index'  
-import usersRouter from './routes/users'
+
 import cors from 'cors'
 import morgan from 'morgan'
 import fs from 'fs'
 import FileStreamRotator from 'file-stream-rotator/lib/FileStreamRotator'
 import bodyParser from 'body-parser'
+import indexRouter from './routes/index.route'  
+import usersRouter from './routes/users.route'
+import bookRouter from './routes/book.route'
 // const path = require('path')
 var app = express();
 
@@ -46,6 +48,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/books',bookRouter)
 //跨域问题解决方面
 app.use(cors({  
     origin:['http://localhost:8080'],
