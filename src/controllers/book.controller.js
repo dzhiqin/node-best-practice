@@ -1,4 +1,5 @@
 import {Book} from '../models'
+import { Result } from '../libs/result'
 
 export const getRecordsByPage = (req,res) => {
   const { page,pageSize } = req.query
@@ -8,17 +9,17 @@ export const getRecordsByPage = (req,res) => {
     offset: (page-1) * pageSize,
     order: [['id','DESC']]
   }).then(books => {
-    return res.status(200).json({books})
+    return res.json(Result.success(books))
   }).catch(err => {
-    return res.status(400).json({err})
+    return res.status(400).json(Result.failed(err))
   })
 }
 export const getRecordById = (req,res) => {
   const id = req.params.id
   Book.findByPk(id).then(book => {
-    return res.status(200).json({book})
+    return res.json(Result.success(book))
   }).catch(err => {
-    return res.status(400).json({err})
+    return res.status(400).json(Result.failed(err))
   })
 }
 export const deleteRecordById = (req,res) => {
@@ -26,11 +27,9 @@ export const deleteRecordById = (req,res) => {
   Book.destroy({
     where: {id: id}
   }).then(() => {
-    return res.status(200).json({
-      message: "success"
-    })
+    return res.json(Result.success(null))
   }).catch(err => {
-    return res.status(400).json({err})
+    return res.status(400).json(Result.failed(err))
   })
 }
 export const addRecord = (req,res) => {
@@ -38,12 +37,9 @@ export const addRecord = (req,res) => {
   Book.create({
     name, author
   }).then(book => {
-    return res.status(200).json({
-      message: "success",
-      book
-    })
+    return res.json(Result.success(book))
   }).catch(err => {
-    return res.status(400).json({err})
+    return res.status(400).json(Result.failed(err))
   })
 }
 export const updateRecord = (req,res) => {
@@ -55,17 +51,12 @@ export const updateRecord = (req,res) => {
       book.update({
         name,author
       }).then(newBook =>{
-        return res.status(202).json({
-          message:"success",
-          book: newBook
-        })
+        return res.json(Result.success(newBook))
       })
     }else{
-      return res.status(206).json({
-        message: "record not found"
-      })
+      return res.json(Result.recordNotFound({id}))
     }
   }).catch(err => {
-    return res.status(400).json({err})
+    return res.status(400).json(Result.failed(err))
   })
 }

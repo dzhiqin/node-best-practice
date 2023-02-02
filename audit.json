@@ -11,6 +11,11 @@
             "date": 1675234861761,
             "name": "/Users/dongzhiqin/myProjects/node-demo/src/logs/access-20230201.log",
             "hash": "7fea84a09a999597858ba9c8139e7146"
+        },
+        {
+            "date": 1675301662934,
+            "name": "/Users/dongzhiqin/myProjects/node-demo/src/logs/access-20230202.log",
+            "hash": "147583d25fdcead120f227ab2cd56e3b"
         }
     ]
 }
