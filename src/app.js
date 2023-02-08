@@ -12,6 +12,9 @@ import bodyParser from 'body-parser'
 import indexRouter from './routes/index.route'  
 import usersRouter from './routes/users.route'
 import bookRouter from './routes/book.route'
+import categoryRouter from './routes/category.route'
+import authorRouter from './routes/author.route'
+
 // const path = require('path')
 var app = express();
 
@@ -48,7 +51,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/books',bookRouter)
+app.use('/books',bookRouter);
+app.use('/categories',categoryRouter)
+app.use('/authors',authorRouter)
 //跨域问题解决方面
 app.use(cors({  
     origin:['http://localhost:8080'],
