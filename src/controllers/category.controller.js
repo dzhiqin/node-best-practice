@@ -1,4 +1,4 @@
-import { Category,Book } from '../models'
+import { Category,Book,Author } from '../models'
 import { Result } from '../libs/result'
 
 export const getRecords = (req,res) => {
@@ -29,6 +29,18 @@ export const getCategoryBooks = (req,res) => {
     include: {model: Book,attributes:['id','name']}
   }).then(books => {
     return res.json(Result.success(books))
+  }).catch(err => {
+    return res.status(500).json(Result.failed(err))
+  })
+}
+export const getCategoryAuthors = (req,res) => {
+  const { id } = req.body
+  Category.findAll({
+    where: {id},
+    attributes: ['id','name'],
+    include: {model: Author,attributes: ['id','name']}
+  }).then(authors => {
+    return res.json(Result.success(authors))
   }).catch(err => {
     return res.status(500).json(Result.failed(err))
   })

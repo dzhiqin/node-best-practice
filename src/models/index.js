@@ -30,12 +30,13 @@ fs
     const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
     db[model.name] = model;
   });
-
 Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {
     db[modelName].associate(db);
   }
 });
+// db.Author.belongsToMany(db.Category,{through: 'Book',foreignKey: 'authorId'})
+// db.Category.belongsToMany(db.Author,{through: 'Book', foreignKey: 'categoryId'})
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;

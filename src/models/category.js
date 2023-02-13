@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
           name: "categoryId"
         }
       })
+      Category.belongsToMany(models.Author,{through: 'Book',foreignKey: 'categoryId'})
     }
   }
   Category.init({

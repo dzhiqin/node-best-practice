@@ -20,13 +20,12 @@ export const getRecordById = (req,res) => {
   Book.findByPk(id).then(async(book) => {
     const author = await book.getAuthor()
     const category = await book.getCategory()
-    console.log(book)
     const data = {
       ...book.dataValues,
       createdAt: getDateTime(book.dataValues.createdAt),
       updatedAt: getDateTime(book.dataValues.updatedAt),
-      authorName:author.name,
-      categoryName:category.name
+      authorName:author?.name,
+      categoryName:category?.name
     }
     return res.json(Result.success(data))
   }).catch(err => {
