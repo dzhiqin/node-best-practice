@@ -7,7 +7,11 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
-
+router.get('/undertake',function(req,res,next) {
+  const pageUrl = decodeURI(req.query.pageUrl)
+  // const pageUrl = "https://gzslwzxyy.lanwoncloudfilm.com:7280/cloudfilm/html/login.html?openId=oL9bc5TGXtTrYtyYyNvKsDLrM0pY&type=2&reportId="
+  res.render('undertake', {pageUrl})
+})
 router.get('/hi', function(req, res, next) {
   req.name = 'kim';
   next();
