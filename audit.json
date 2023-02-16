@@ -8,11 +8,6 @@
     "extension": "",
     "files": [
         {
-            "date": 1675234861761,
-            "name": "/Users/dongzhiqin/myProjects/node-demo/src/logs/access-20230201.log",
-            "hash": "7fea84a09a999597858ba9c8139e7146"
-        },
-        {
             "date": 1675301662934,
             "name": "/Users/dongzhiqin/myProjects/node-demo/src/logs/access-20230202.log",
             "hash": "147583d25fdcead120f227ab2cd56e3b"
@@ -56,6 +51,11 @@
             "date": 1676427917329,
             "name": "/Users/dongzhiqin/myProjects/node-demo/dist/logs/access-20230215.log",
             "hash": "6253cbf6cc08f8f7eedfd18a630b6301"
+        },
+        {
+            "date": 1676515099582,
+            "name": "/Users/dongzhiqin/myProjects/node-demo/src/logs/access-20230216.log",
+            "hash": "85ef8563d6c8cee7a230f73e809d5ff1"
         }
     ]
 }
