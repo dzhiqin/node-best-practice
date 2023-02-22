@@ -11,6 +11,9 @@
 import app from '../app'
 import debugLib from 'debug'
 import http from 'http'
+import https from 'https'
+import fs from 'fs'
+import path from 'path'
 const debug = debugLib('node-api:server')
 
 /**
@@ -24,13 +27,24 @@ app.set('port', port);
  * Create HTTP server.
  */
 
-var server = http.createServer(app);
+
+if(process.env.NODE_ENV === 'production'){
+  const options = {
+    key:fs.readFileSync(path.join(__dirname,'../../cert/node.gdbkyz.com.key')),
+    cert:fs.readFileSync(path.join(__dirname,'../../cert/node.gdbkyz.com_bundle.crt'))
+  }
+  var server = https.createServer(options,app);
+  server.listen(port)
+}else{
+  var server = http.createServer(app);
+  server.listen(port);
+}
 
 /**
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(port);
+// server.listen(options,port);
 server.on('error', onError);
 server.on('listening', onListening);
 
