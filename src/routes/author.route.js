@@ -1,7 +1,7 @@
 import express from 'express'
 const router = express.Router()
 import {
-  createRecord
+	createRecord
 } from '../controllers/author.controller'
 
 router.post('/create',createRecord)
